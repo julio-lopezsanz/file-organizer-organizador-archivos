@@ -14,18 +14,24 @@ I built this project to automate the process of organizing directories (like the
 The script scans a target directory and moves files into subfolders based on their extension:
 - `.jpg, .png, .gif` -> **Images**
 - `.pdf, .docx, .txt` -> **Documents**
-- `.zip, .rar` -> **Archives**
+- `.mp3, .wav, .aac` -> **Audio**
+- `.mp4, .avi, .mkv` -> **Video**
+- `.zip, .rar, .7z` -> **Archives**
 
 ## Technologies Used
 * **Python 3.x**
-* **OS Module** (for file system interaction)
+* **Pathlib Module** (best option and more modern than the OS module)
 * **Shutil Module** (for high-level file operations)
+* **Watchdog Library** (monitor file system events in real time)
 
 ## Installation & Usage
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/julio-lopezsanz/file-organizer.git
-2. **Run the script:**
+2. **Install dependencies:**
+   ```bash 
+   pip install watchdog
+3. **Run the script:**
    ```bash 
    python main.py
 
