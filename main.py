@@ -105,15 +105,18 @@ rules = {
 }
 root_dir = Path.home() / "Downloads"
 
+# Setup Watchdog observer to monitor root_dir without recursion
 observer = Observer()
 observer.schedule(FileHandler(), root_dir, recursive=False)
 observer.start()
 print("Organizer active. Press Ctrl+C to stop.")
 
 try:
+    # Keep the main thread alive to allow the observer to run in the background
     while True:
         time.sleep(1)
 except KeyboardInterrupt:
+    # Handle Ctrl+C to stop the observer and exit cleanly
     observer.stop()
 observer.join()
 
