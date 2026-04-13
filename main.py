@@ -18,8 +18,24 @@ class FileHandler(FileSystemEventHandler):
     Attributes:
         event (obj): Report any incidents that have occurred. 
     """
+    def process(self, file_path):
+        """
+        Validates and triggers the organization logic.
+        Filters out directories and temporary download files.
+        """
+        if file_path.suffix.lower() not in [".tmp", ".crdownload", ".part"]:
+            organize_file(file_path)
+
     def on_created(self, event):
-        organize_file(Path(event.src_path))
+        """Triggered when a new file appears in the directory."""
+        self.process(Path(event.src_path))
+
+    def on_moved(self, event):
+        """
+        Triggered when a file is renamed (e.g., a download finishing).
+        Captures the final destination path to process the file.
+        """
+        self.process(Path(event.dest_path))
 
 def get_unique_path(destination, filename):
     """
