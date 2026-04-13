@@ -8,6 +8,35 @@ file extensions using pathlib and watchdog.
 import shutil
 from pathlib import Path
 
+def get_unique_path(destination, filename):
+    """
+    If the file already exists at the destination, add a number to the name.
+    Otherwise, keep the original name.
+
+    Args:
+        destination (Path): target directory for the file
+        filename (Path): filename and file extension
+
+    Returns:
+        Path: original or modified path if a duplicate exists
+    """
+    target = destination / filename
+
+    if not target.exists():
+        return target # There is no conflict; use the original name
+
+    # Separate the name and extension to insert the number between them
+    stem = Path(filename).stem
+    suffix = Path(filename).suffix
+
+    counter = 1
+    while target.exists():
+        new_filename = f"{stem}_{counter}{suffix}"
+        target = destination / new_filename
+        counter += 1
+
+    return target # Returns the modified filename to avoid conflicts
+
 #Supported file extensions and the destination folder for each one
 rules = {
     ".jpg": "Images",
@@ -43,5 +72,7 @@ for file in root_dir.iterdir():
 
     des_dir = root_dir / dir_name
     des_dir.mkdir(exist_ok=True)# It does not return an error if the folder already exists
-    shutil.move(file, des_dir)
-    print(f"Move: {file.name} -> {dir_name}")
+
+    unique_path = get_unique_path(des_dir, file.name)
+    shutil.move(file, unique_path)
+    print(f"Moved: {file.name} -> {des_dir.name}")
