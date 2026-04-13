@@ -39,8 +39,9 @@ for file in root_dir.iterdir():
 
     extension = file.suffix.lower() # Standardize to avoid issues with .JPG or .PDF files
 
-    if extension in rules:
-        des_dir = root_dir / rules[extension]
-        des_dir.mkdir(exist_ok=True)# It does not return an error if the folder already exists
-        shutil.move(file, des_dir)
-        print(f"Move: {file.name} -> {rules[extension]}")
+    dir_name = rules.get(extension, "Others")
+
+    des_dir = root_dir / dir_name
+    des_dir.mkdir(exist_ok=True)# It does not return an error if the folder already exists
+    shutil.move(file, des_dir)
+    print(f"Move: {file.name} -> {dir_name}")
