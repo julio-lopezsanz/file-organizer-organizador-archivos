@@ -28,7 +28,7 @@ rules = {
     ".rar": "Archives",
     ".7z": "Archives"
 }
-root_dir = Path("/Users/lopez/Downloads")
+root_dir = Path.home() / "Downloads"
 
 #Iterate only through files, ignoring folders and the script itself
 for file in root_dir.iterdir():
