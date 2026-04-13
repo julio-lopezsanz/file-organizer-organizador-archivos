@@ -37,6 +37,39 @@ def get_unique_path(destination, filename):
 
     return target # Returns the modified filename to avoid conflicts
 
+def organize_file(file):
+    """
+    Moves a file to the corresponding folder based on its extension.
+
+    Args:
+        file (Path): full path of the file to organize
+    """
+
+    if file == Path(__file__):
+        return
+    if not file.is_file():
+        return
+
+    extension = file.suffix.lower() # Standardize to avoid issues with .JPG or .PDF files
+
+    # Sort the file by its extension; if no extension is specified, it goes to “Others”
+    dir_name = rules.get(extension, "Others")
+
+    des_dir = root_dir / dir_name
+    des_dir.mkdir(exist_ok=True)# It does not return an error if the folder already exists
+
+    unique_path = get_unique_path(des_dir, file.name)
+
+    try:
+        shutil.move(file, unique_path)
+        print(f"Moved: {file.name} -> {des_dir.name}")
+    except PermissionError:
+        print(f"Permission denied: {file.name} -> skipped")
+    except FileNotFoundError:
+        print(f"File not found: {file.name} -> skipped")
+    except Exception as e:
+        print(f"Unexpected error with {file.name}: {e}")
+
 #Supported file extensions and the destination folder for each one
 rules = {
     ".jpg": "Images",
@@ -60,28 +93,5 @@ rules = {
 root_dir = Path.home() / "Downloads"
 
 #Iterate only through files, ignoring folders and the script itself
-for file in root_dir.iterdir():
-    if file == Path(__file__):
-        continue
-    if not file.is_file():
-        continue
-
-    extension = file.suffix.lower() # Standardize to avoid issues with .JPG or .PDF files
-
-    # Sort the file by its extension; if no extension is specified, it goes to “Others”
-    dir_name = rules.get(extension, "Others")
-
-    des_dir = root_dir / dir_name
-    des_dir.mkdir(exist_ok=True)# It does not return an error if the folder already exists
-
-    unique_path = get_unique_path(des_dir, file.name)
-
-    try:
-        shutil.move(file, unique_path)
-        print(f"Moved: {file.name} -> {des_dir.name}")
-    except PermissionError:
-        print(f"Permission denied: {file.name} -> skipped")
-    except FileNotFoundError:
-        print(f"File not found: {file.name} -> skipped")
-    except Exception as e:
-        print(f"Unexpected error with {file.name}: {e}")
+for files in root_dir.iterdir():
+    organize_file(files)
