@@ -49,3 +49,63 @@ The script scans a target directory and moves files into subfolders based on the
 - Documentation best practices for developers.
 
 Created with 💻 by [**Julio Cesar Lopez Sanchez**](https://github.com/julio-lopezsanz)
+
+------------------
+
+# Organizador de Archivos (Python)
+
+Una utilidad basada en Python para organizar automáticamente archivos locales en carpetas categorizadas por extensión. Diseñado para la eficiencia y la gestión limpia del espacio de trabajo.
+
+## Propósito
+
+Construí este proyecto para automatizar el proceso de organización de directorios (como la carpeta de Descargas). Este es un **proyecto de aprendizaje** enfocado en dominar los fundamentos de Python y la automatización del sistema de archivos.
+
+## Características
+
+- **Clasificación Automática**: Agrupa archivos en categorías como `Imágenes`, `Documentos` y `Multimedia`.
+- **Controles de Seguridad**: Verifica la existencia del directorio antes de mover los archivos.
+- **Extensible**: Es fácil añadir nuevas extensiones de archivo y categorías.
+- Monitoreo en tiempo real utilizando Watchdog.
+- Manejo automático de conflictos de nombres (archivo_1, archivo_2...).
+- Limpieza previa de archivos existentes al iniciar.
+- Compatibilidad multiplataforma (Path.home).
+
+## Cómo funciona
+El script escanea un directorio objetivo y mueve los archivos a subcarpetas según su extensión:
+
+`.jpg, .png, .gif` -> **Imágenes**
+`.pdf, .docx, .txt` -> **Documentos**
+`.mp3, .wav, .aac` -> **Audio**
+`.mp4, .avi, .mkv` -> **Video**
+`.zip, .rar, .7z` -> **Archivos Comprimidos**
+
+## Tecnologías Utilizadas
+
+* **Python 3.6 o superior**
+* **Módulo Pathlib** (la mejor opción y más moderna que el módulo OS)
+* **Módulo Shutil** (para operaciones de archivos de alto nivel)
+* **Librería Watchdog** (monitoreo de eventos del sistema de archivos en tiempo real)
+
+## Instalación y Uso
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/julio-lopezsanz/file-organizer.git
+   ```
+2. **Instalar dependencias:**
+   ```bash 
+   pip install watchdog
+   ```
+3. **Ejecutar el script:**
+   ```bash 
+   python main.py
+   ```
+
+## Ruta de Aprendizaje
+
+**Al construir este proyecto, estoy practicando:**
+- El uso de la librería estándar de Python para tareas del mundo real.
+- La gestión de versiones de código con Git y GitHub.
+- Buenas prácticas de documentación para desarrolladores.
+
+Creado con 💻 por [**Julio Cesar Lopez Sanchez**](https://github.com/julio-lopezsanz)
